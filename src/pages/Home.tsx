@@ -79,7 +79,7 @@ export default function Home() {
 
       <a
         className={`${styles.contact} ${styles.linkedin}`}
-        href="https://www.linkedin.com/in/dolevbrosh"
+        href="https://www.linkedin.com/in/dolev-brosh-a03290197/"
         target="_blank"
         rel="noreferrer"
         aria-label="LinkedIn profile"
