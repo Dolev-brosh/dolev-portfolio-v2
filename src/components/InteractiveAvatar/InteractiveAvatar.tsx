@@ -73,7 +73,7 @@ export default function InteractiveAvatar({
         </div>
       )}
       <img
-        src="/lib/DolevFace.png"
+        src="./lib/DolevFace.png"
         alt="Dolev Brosh"
         className={styles.face}
       />
