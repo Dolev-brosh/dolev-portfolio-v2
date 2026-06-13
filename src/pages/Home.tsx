@@ -1,16 +1,7 @@
-import Avatar from "../components/Avatar/Avatar";
 import InteractiveAvatar from "../components/InteractiveAvatar/InteractiveAvatar";
 import ProjectCard, { Project } from "../components/ProjectCard/ProjectCard";
 import StickyHeader from "../components/StickyHeader/StickyHeader";
 import styles from "./Home.module.css";
-
-const FACTS = [
-  "Hi, I'm Dolev.",
-  "I craft end-to-end UX/UI experiences.",
-  "Previously designed at Wix and Monday.com.",
-  "I also code in React & TypeScript.",
-  "When I'm not designing, I'm probably doing calisthenics.",
-];
 
 const PROJECTS: Project[] = [
   {

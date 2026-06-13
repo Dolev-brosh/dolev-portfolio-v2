@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import AvatarFace from "../Avatar/AvatarFace";
 import styles from "./StickyHeader.module.css";
 
 interface StickyHeaderProps {
