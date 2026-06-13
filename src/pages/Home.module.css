@@ -1,0 +1,313 @@
+/* ============================================
+   Home — "infinite" grid with 2px mint lines.
+
+   The container paints the line color and exposes
+   it only through a 2px gap; every child paints an
+   opaque background on top, so lines are a uniform
+   2px with no double borders.
+
+   Columns: flexible outer gutters on both sides of
+   a 1200px central content area (main + right col),
+   so the lines run to the screen edges.
+   ============================================ */
+
+.grid {
+  display: grid;
+  gap: var(--grid-line-width);
+  background-color: var(--color-grid-line);
+  height: calc(100svh - 64px);
+  /* Outer gutters: never below 60px, expand infinitely past the
+     1200px content max. The center tracks are non-flexible, so they
+     absorb free space first; the fr gutters only grow with the surplus. */
+  grid-template-columns:
+    minmax(var(--grid-gutter-min), 1fr)
+    minmax(0, var(--grid-main-col-width))
+    var(--grid-right-col-width)
+    minmax(var(--grid-gutter-min), 1fr);
+  grid-template-rows: 0.5fr 0.5fr 1fr minmax(200px, 1.2fr) 60px;
+  grid-template-areas:
+    ". intro    email    ."
+    ". intro    linkedin ."
+    ". intro    avatar   ."
+    ". projects projects ."
+    ". .        .        .";
+}
+
+/* Every cell paints over the line color and
+   stretches to fill its full track width */
+.grid > * {
+  width: 100%;
+  background-color: var(--color-bg);
+}
+
+/* Spacers carry no styles of their own: they auto-place
+   into the unnamed "." cells in DOM order (row-major). */
+
+/* ---------- Logo / home link ---------- */
+
+.logo {
+  grid-area: logo;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-lg);
+}
+
+.logoMark {
+  width: 34px;
+  color: var(--color-accent);
+  transition: transform var(--transition-snap);
+}
+
+.logo:hover .logoMark {
+  transform: scale(1.1);
+}
+
+.logo:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -4px;
+}
+
+/* ---------- Intro (header + about) ---------- */
+
+.intro {
+  grid-area: intro;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  padding: var(--space-xll);
+}
+
+.heroName {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-hero);
+  font-weight: 600;
+  line-height: normal;
+}
+
+.heroSubtitle {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-subtitle);
+  font-weight: 400;
+  line-height: normal;
+  color: var(--color-text-muted);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.aboutText {
+  width: 100%;
+  color: var(--color-text-muted);
+  line-height: normal;
+}
+
+/* Hero lockup: avatar + h1 sit side-by-side */
+.heroLockup {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+/* The easter-egg avatar lives in the header only on mobile */
+.mobileAvatar {
+  display: none;
+  flex-shrink: 0;
+}
+
+/* ---------- Contact icons ---------- */
+
+.contact {
+  display: grid;
+  place-items: center;
+  min-height: 60px;
+  color: var(--color-text);
+  transition: background-color var(--transition-snap),
+    color var(--transition-snap);
+}
+
+.email {
+  grid-area: email;
+}
+
+.linkedin {
+  grid-area: linkedin;
+}
+
+.contact svg {
+  width: 24px;
+  height: 24px;
+}
+
+.contact:hover {
+  background-color: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.contact:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -4px;
+}
+
+/* ---------- Large avatar cell ---------- */
+
+.avatarArea {
+  grid-area: avatar;
+  display: grid;
+  place-items: center;
+  padding: var(--space-lg);
+}
+
+/* ---------- Projects ---------- */
+
+.projects {
+  grid-area: projects;
+  min-height: 200px;
+  width: 100%;
+  position: relative;
+  z-index: 50;
+}
+
+.projectsLabel {
+  position: absolute;
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-light);
+  bottom: 50%;
+  left: 60px;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-body);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.projectsRow {
+  display: grid;
+  grid-template-columns: minmax(37%, 1fr) 1fr 1fr;
+  align-items: end;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: transparent;
+}
+
+.projectsRow > * {
+  height: 40%;
+  border-radius: 16px 16px 0 0;
+  position: relative;
+  transition: height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  padding-bottom: 8px;
+}
+
+.projectsRow > *:hover {
+  height: 80%;
+  cursor: pointer;
+}
+
+.projectsRow > :nth-child(1) { z-index: 1; }
+.projectsRow > :nth-child(2) { z-index: 2; margin-left: -60px; }
+.projectsRow > :nth-child(3) { z-index: 3; margin-left: -60px; }
+
+/* Tablet and below: drop the fan, stack vertically */
+@media (max-width: 1200px) {
+  .projects {
+    height: auto;
+    min-height: 100%;
+  }
+
+  .projectsRow {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+    height: auto;
+  }
+
+  .projectsRow > * {
+    height: auto !important;
+    min-height: 120px;
+    width: 100%;
+    margin-left: 0 !important;
+    border-radius: 16px !important;
+    transition: none !important;
+    padding-bottom: 0;
+  }
+
+  .projectsRow > :nth-child(1),
+  .projectsRow > :nth-child(2),
+  .projectsRow > :nth-child(3) {
+    z-index: 1;
+  }
+
+  .projectsLabel {
+    position: relative;
+    bottom: auto;
+    left: 0;
+    margin-bottom: 16px;
+  }
+}
+
+/* ============================================
+   Mobile — clean stack with 40px outer gutters:
+   header (with mini avatar) → about → projects
+   → contacts side-by-side (1x2)
+
+   The gutters are real grid columns, so the 2px
+   mint lines keep running between gutter and
+   content and out to the screen edges.
+   ============================================ */
+
+@media (max-width: 768px) {
+  .grid {
+    /* Same gutter rule as desktop. The middle tracks get a non-flexible
+       max (half the content limit each) instead of bare 1fr — flexible
+       tracks would split free space with the fr gutters, inflating them
+       past 60px; non-flexible tracks fill up first, so the gutters hold
+       their 60px minimum until there is genuine surplus. */
+    grid-template-columns:
+      minmax(var(--grid-gutter-min), 1fr)
+      minmax(0, calc((var(--content-max-width) - var(--grid-line-width)) / 2))
+      minmax(0, calc((var(--content-max-width) - var(--grid-line-width)) / 2))
+      minmax(var(--grid-gutter-min), 1fr);
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      ". intro    intro    ."
+      ". projects projects ."
+      ". email    linkedin .";
+    height: auto;
+  }
+
+  .logo,
+  .avatarArea,
+  .spacer {
+    display: none;
+  }
+
+  /* 3 rows x 2 gutters = 6 empty cells to paint white;
+     they auto-place into the "." columns row by row */
+  .spacer:nth-of-type(-n + 6) {
+    display: block;
+  }
+
+  .mobileAvatar {
+    display: flex;
+    width: 100px;
+  }
+
+  .intro {
+    gap: var(--space-xl);
+    padding: var(--space-lg) var(--space-md) var(--space-xl);
+  }
+
+  .projects {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .projectsLabel {
+    position: static;
+    margin-bottom: var(--space-sm);
+    pointer-events: auto;
+  }
+
+  .contact {
+    min-height: 96px;
+  }
+}

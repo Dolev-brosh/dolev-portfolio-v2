@@ -1,0 +1,113 @@
+/* ---- Shared transition --------------------------------------------- */
+/* z-index transitions at 0s so the card instantly pops to the front
+   on hover and immediately falls back on mouse-leave. height uses the
+   custom cubic-bezier for a high-end, springy feel. */
+:root {
+  --transition-project: height 0.5s cubic-bezier(0.25, 1, 0.5, 1), z-index 0s;
+}
+
+/* ---- Base card ------------------------------------------------------- */
+
+.card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  flex: 1 1 0;
+  height: 40%;
+  overflow: hidden;
+
+  /* Rounded on top only: cards sit flush on the cell's bottom edge */
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  cursor: pointer;
+
+  transition: var(--transition-project);
+}
+
+.card:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -4px;
+}
+
+/* Base z-index stacking: higher index = closer to viewer, matching
+   DOM order so the second card already obscures the first's right edge. */
+.card:nth-child(1) {
+  z-index: 1;
+}
+
+.card:nth-child(2) {
+  z-index: 2;
+}
+
+.card:nth-child(3) {
+  z-index: 3;
+}
+
+/* ---- Inner content --------------------------------------------------- */
+/* position: absolute + bottom: 0 anchors the text to the card's bottom
+   edge. As the card grows upward, the content stays put and simply gets
+   more space above it — no warping, no transform distortion. */
+.inner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  gap: var(--radius-sm);
+  padding: var(--space-md);
+
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+.arrow {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+}
+
+.description {
+  font-size: var(--font-size-small);
+  font-weight: 300;
+}
+
+/* ---- Desktop hover: grow strictly upward ---------------------------- */
+/* Parent (.projectsRow) already has align-items: flex-end, so the card's
+   bottom edge stays fixed and the extra height extends toward the top.
+   z-index: 10 pops the hovered card above all siblings immediately (0s). */
+
+@media (hover: hover) and (pointer: fine) and (min-width: 1025px) {
+  .card:hover {
+    height: 260px;
+  }
+}
+
+/* ---- Tablet & mobile: standard vertical stack ----------------------- */
+
+@media (max-width: 1200px) {
+  .card {
+    height: auto;
+    overflow: visible;
+    border-radius: var(--radius-md);
+    transition: none;
+  }
+
+  .inner {
+    position: static;
+    min-height: 110px;
+  }
+}

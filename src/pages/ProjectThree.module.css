@@ -1,0 +1,261 @@
+/* ============================================================
+   ProjectThree — self-contained styles.
+   CSS Grid architecture replicated directly here.
+   ============================================================ */
+
+/* ---- Outer grid (3-column project-page layout) ---- */
+
+.grid {
+  display: grid;
+  gap: var(--grid-line-width);
+  background-color: var(--color-grid-line);
+  min-height: 100vh;
+  grid-template-columns:
+    minmax(var(--grid-gutter-min), 1fr)
+    minmax(0, var(--content-max-width))
+    minmax(var(--grid-gutter-min), 1fr);
+  grid-template-rows: auto 64px;
+  grid-template-areas:
+    "main-l content main-r"
+    "bot-l  bottom  bot-r";
+}
+
+.grid > * {
+  background-color: var(--color-bg);
+}
+
+/* ---- Spacer cells ---- */
+.spacerMainL  { grid-area: main-l; }
+.spacerMainR  { grid-area: main-r; }
+.spacerBotL   { grid-area: bot-l;  }
+.spacerBottom { grid-area: bottom; }
+.spacerBotR   { grid-area: bot-r;  }
+
+/* ---- Content column ---- */
+
+.content {
+  grid-area: content;
+  width: 100%;
+}
+
+/* ---- Project header (title + metadata) ---- */
+
+.projectHeader {
+  display: flex;
+  min-height: 250px;
+  border-bottom: var(--grid-line-width) solid var(--color-grid-line);
+}
+
+.textWrapper {
+  display: flex;
+  flex: 2;
+  flex-direction: column;
+  gap: var(--space-sm);
+  justify-content: center;
+  width: 50%;
+  padding: var(--space-2xl) var(--space-xl);
+}
+
+.mainHeader {
+  font-family: var(--font-family-heading);
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: var(--line-height-tight);
+}
+
+.subHeader {
+  font-family: var(--font-family-heading);
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.details {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+  padding: var(--space-2xl) var(--space-xl);
+  gap: var(--space-md);
+  border-left: var(--grid-line-width) solid var(--color-grid-line);
+}
+
+.dataTile {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-md);
+  font-size: var(--font-size-run);
+  color: var(--color-text);
+}
+
+.dataTileHeader {
+  font-weight: 600;
+}
+
+/* ---- Two-column description row ---- */
+
+.projectDescription {
+  display: flex;
+  border-bottom: var(--grid-line-width) solid var(--color-grid-line);
+}
+
+.descriptionSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+  padding: var(--space-2xl) var(--space-xl);
+  gap: var(--space-xs);
+}
+
+.descriptionSection + .descriptionSection {
+  border-left: var(--grid-line-width) solid var(--color-grid-line);
+}
+
+.descriptionTitle {
+  font-size: var(--font-size-run);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.descriptionText {
+  font-size: var(--font-size-run);
+  font-weight: 300;
+  color: var(--color-text-muted);
+  line-height: var(--line-height-run);
+}
+
+/* ---- Full-width image frames ---- */
+
+.imageFrame {
+  display: flex;
+  flex: 2;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-2xl) var(--space-xl);
+  border-bottom: var(--grid-line-width) solid var(--color-grid-line);
+}
+
+.imageFrame.noBorder {
+  border-bottom: none;
+}
+
+.projectImg {
+  width: 100%;
+  display: block;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+.noShadow {
+  box-shadow: none;
+}
+
+.imgCaption {
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-body);
+}
+
+/* ---- Side-by-side image + description ---- */
+
+.imageFrameWithDesc {
+  display: flex;
+  border-bottom: var(--grid-line-width) solid var(--color-grid-line);
+}
+
+.sideImg {
+  width: 50%;
+  flex: 2;
+  display: block;
+  object-fit: cover;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  padding: var(--space-xl);
+}
+
+.sideText {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+  padding: var(--space-2xl) var(--space-xl);
+  gap: var(--space-sm);
+  border-left: var(--grid-line-width) solid var(--color-grid-line);
+}
+
+/* textLeft: text on the left, image on the right */
+.imageFrameWithDesc.textLeft .sideText {
+  order: -1;
+  border-left: none;
+  border-right: var(--grid-line-width) solid var(--color-grid-line);
+}
+
+/* Footer navigation is handled by the shared <FooterNav /> component. */
+
+/* ============================================
+   Mobile — ≤ 768px
+   ============================================ */
+
+@media (max-width: 768px) {
+  .projectHeader,
+  .projectDescription {
+    flex-direction: column;
+  }
+
+  .textWrapper,
+  .descriptionSection {
+    width: 100%;
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .descriptionSection + .descriptionSection {
+    border-left: none;
+    border-top: var(--grid-line-width) solid var(--color-grid-line);
+  }
+
+  .details {
+    width: 100%;
+    border-left: none;
+    border-top: var(--grid-line-width) solid var(--color-grid-line);
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .imageFrameWithDesc {
+    flex-direction: column;
+  }
+
+  /* Text always appears above image on mobile */
+  .sideText {
+    order: 0;
+    width: 100%;
+    border-left: none;
+    border-bottom: var(--grid-line-width) solid var(--color-grid-line);
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .sideImg {
+    order: 1;
+    width: 100% !important;
+    max-width: 100% !important;
+    align-self: stretch;
+    object-fit: cover;
+  }
+
+  .imageFrameWithDesc.textLeft .sideText {
+    order: 0;
+    border-right: none;
+    border-bottom: var(--grid-line-width) solid var(--color-grid-line);
+  }
+
+  .imageFrame {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .descriptionText {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+}

@@ -1,0 +1,371 @@
+/* ============================================
+   Shared project-page styles.
+   Imported by ProjectOne.tsx, ProjectTwo.tsx, etc.
+   All grid tokens come from variables.css.
+   ============================================ */
+
+/* ---- Outer grid (identical to Home's "infinite" trick) ---- */
+
+.grid {
+  display: grid;
+  gap: var(--grid-line-width);
+  background-color: var(--color-grid-line);
+  min-height: 100vh;
+  grid-template-columns:
+    minmax(var(--grid-gutter-min), 1fr)
+    minmax(0, var(--content-max-width))
+    minmax(var(--grid-gutter-min), 1fr);
+  grid-template-rows: auto 64px;
+  grid-template-areas:
+    "main-l content main-r"
+    "bot-l  bottom  bot-r";
+}
+
+.grid > * {
+  background-color: var(--color-bg);
+}
+
+/* ---- Spacer cells ---- */
+.spacerMainL  { grid-area: main-l; }
+.spacerMainR  { grid-area: main-r; }
+.spacerBotL   { grid-area: bot-l;  }
+.spacerBottom { grid-area: bottom; }
+.spacerBotR   { grid-area: bot-r;  }
+
+/* ---- Content column ---- */
+
+.content {
+  grid-area: content;
+  width: 100%;
+}
+
+/* ============================================
+   Section dividers — internal 2px mint lines
+   consistent with the outer gap lines.
+   ============================================ */
+
+/* ---- Project header (title + metadata) ---- */
+
+.projectHeader {
+  display: flex;
+  min-height: 250px;
+  border-bottom: var(--grid-line-width) solid var(--color-grid-line);
+}
+
+.textWrapper {
+  display: flex;
+  flex: 2;
+  flex-direction: column;
+  gap: var(--space-sm);
+  justify-content: center;
+  width: 50%;
+  padding: var(--space-2xl) var(--space-xl);
+}
+
+.mainHeader {
+  font-family: var(--font-family-heading);
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: var(--line-height-tight);
+}
+
+.subHeader {
+  font-family: var(--font-family-heading);
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.details {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+  padding: var(--space-xl) var(--space-2xl);
+  gap: var(--space-md);
+  border-left: var(--grid-line-width) solid var(--color-grid-line);
+}
+
+.dataTile {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-md);
+  font-size: var(--font-size-run);
+  color: var(--color-text);
+}
+
+.dataTileHeader {
+  font-weight: 600;
+}
+
+/* ---- Two-column description row ---- */
+
+.projectDescription {
+  display: flex;
+  border-bottom: var(--grid-line-width) solid var(--color-grid-line);
+}
+
+.descriptionSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+  padding: var(--space-2xl) var(--space-xl);
+  gap: var(--space-xs);
+}
+
+.descriptionSection + .descriptionSection {
+  border-left: var(--grid-line-width) solid var(--color-grid-line);
+}
+
+.descriptionTitle {
+  font-size: var(--font-size-run);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.descriptionText {
+  font-size: var(--font-size-run);
+  font-weight: 300;
+  color: var(--color-text-muted);
+  line-height: var(--line-height-run);
+}
+
+.descriptionText ul {
+  margin-top: var(--space-xs);
+  padding-left: var(--space-md);
+}
+
+.descriptionText li {
+  line-height: var(--line-height-body);
+}
+
+/* ---- Full-width image frames ---- */
+
+.imageFrame {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-2xl) var(--space-xl);
+  border-bottom: var(--grid-line-width) solid var(--color-grid-line);
+}
+
+.imageFrame.noBorder {
+  border-bottom: none;
+}
+
+.projectImg {
+  width: 100%;
+  display: block;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+.noShadow {
+  box-shadow: none;
+}
+
+.imgCaption {
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-body);
+}
+
+.imgCaption a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ---- Side-by-side image + description ---- */
+
+.imageFrameWithDesc {
+  display: flex;
+  border-bottom: var(--grid-line-width) solid var(--color-grid-line);
+}
+
+.imageFrameWithDesc.noBorder {
+  border-bottom: none;
+}
+
+
+
+.sideImg {
+  width: 50%;
+  flex: 2;
+  display: block;
+  object-fit:scale-down;
+  padding: var(--space-xl);
+}
+
+.sideImg.center {
+  flex: 1;
+}
+
+.sideText {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+  padding: var(--space-2xl) var(--space-xl);
+  gap: var(--space-sm);
+  border-left: var(--grid-line-width) solid var(--color-grid-line);
+}
+
+.sideText.center {
+  flex: 5;
+}
+
+/* textLeft: text appears on the left, image on the right.
+   On mobile both reset to DOM order (text node first = text shown first). */
+.imageFrameWithDesc.textLeft .sideText {
+  order: -1;
+  border-left: none;
+  border-right: var(--grid-line-width) solid var(--color-grid-line);
+}
+
+.formImg {
+  object-fit: contain;
+  align-self: end;
+  padding: var(--space-xl);
+  padding-bottom: 0;
+
+}
+
+.illustrationImg {
+  width: 100%;
+  object-fit: contain;
+  align-self: center;
+  padding-right: var(--space-xll);
+}
+
+.sideText.wideText {
+  width: 70%;
+}
+
+.sideImg.narrowImg {
+  width: 30%;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---- Large quote ---- */
+
+.singleDescriptionFrame {
+  border-bottom: var(--grid-line-width) solid var(--color-grid-line);
+  padding: var(--space-xl) var(--space-xl);
+}
+
+.singleDescriptionText {
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
+  color: var(--color-text-muted);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+/* ---- Figma / Google Slides iframe ---- */
+
+.iframeFrame {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-2xl) var(--space-xl);
+  border-bottom: var(--grid-line-width) solid var(--color-grid-line);
+}
+
+.iframeFrame.noBorder {
+  border-bottom: none;
+}
+
+.iframeFrame iframe {
+  width: 100%;
+  display: block;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   Mobile — ≤ 768px
+   ============================================ */
+
+@media (max-width: 768px) {
+  .projectHeader,
+  .projectDescription {
+    flex-direction: column;
+  }
+
+  .textWrapper,
+  .descriptionSection {
+    width: 100%;
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .descriptionSection + .descriptionSection {
+    border-left: none;
+    border-top: var(--grid-line-width) solid var(--color-grid-line);
+  }
+
+  .details {
+    width: 100%;
+    border-left: none;
+    border-top: var(--grid-line-width) solid var(--color-grid-line);
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .imageFrameWithDesc {
+    flex-direction: column;
+  }
+
+  /* Text always first in DOM order → always renders above image */
+  .sideText {
+    order: 0;
+    width: 100%;
+    border-left: none;
+    border-bottom: var(--grid-line-width) solid var(--color-grid-line);
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .sideImg {
+    order: 1;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    align-self: stretch;
+    padding: var(--space-lg) !important;
+  }
+
+  .sideImg.center {
+    padding-bottom: 0 !important;
+  }
+
+  .imageFrameWithDesc.textLeft .sideText {
+    order: 0;
+    border-right: none;
+    border-bottom: var(--grid-line-width) solid var(--color-grid-line);
+  }
+
+  .sideText.wideText {
+    width: 100%;
+  }
+
+  .imageFrame,
+  .iframeFrame {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .singleDescriptionFrame {
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  .iframeFrame iframe {
+    height: 360px !important;
+  }
+
+  .descriptionText {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}

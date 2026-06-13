@@ -1,0 +1,93 @@
+/* ============================================
+   Design Tokens — "Quiet Luxury" Minimalism
+   ============================================ */
+
+:root {
+  /* ---------- Color: surfaces ---------- */
+  --color-bg: #fdfdfb;          /* primary off-white canvas */
+  --color-surface: #ffffff;     /* pure white for raised elements */
+
+  /* ---------- The "infinite" grid ---------- */
+  --color-grid-line: #9edec2;     /* mint green line */
+  --grid-line-width: 2px;         /* consistent line weight everywhere */
+  --content-max-width: 1092px;    /* central content constraint */
+  --grid-right-col-width: 240px;  /* contact / avatar column */
+  /* main column = everything left of the right column inside the 1200px */
+  --grid-main-col-width: calc(
+    var(--content-max-width) - var(--grid-right-col-width) -
+      var(--grid-line-width)
+  );
+  --grid-gutter-min: 60px;        /* outer gutters never shrink below this
+                                     (responsive overrides at end of file) */
+
+  /* ---------- Color: text ---------- */
+  --color-text: #231F20;        /* near-black headings/body */
+  --color-text-muted: #6A6A6A;  /* secondary copy */
+  --color-text-ghost: #c8d2cd;  /* watermark / whisper text */
+
+  /* ---------- Color: brand accents ---------- */
+  --color-accent: #00a26a;      /* mint-green brand accent (icons, links) */
+  --color-accent-soft: #e9f7f0; /* accent tint for hover fills */
+
+  /* ---------- Color: project blocks ---------- */
+  --color-project-lime: #b5d916;
+  --color-project-green: #00a878;
+  --color-project-forest: #1c4d3b;
+
+  /* ---------- Typography ---------- */
+  --font-family-base: "AtlasGrotesk", sans-serif;
+  --font-family-heading: "SharpGrotesk", sans-serif;
+
+  --font-size-hero: clamp(3rem, 7.5vw, 5.625rem);
+  --font-size-subtitle: clamp(1.4rem, 3vw, 2.375rem);
+  --font-size-title: clamp(1.5rem, 2.5vw, 2rem);
+  --font-size-body: clamp(1rem, 2.5vw, 1.25rem);
+  --font-size-run: 1rem;
+  --font-size-small: 0.875rem;
+
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 600;
+
+  --line-height-tight: 1.05;
+  --line-height-body: 1.65;
+
+  --letter-spacing-tight: -0.02em;
+
+  /* ---------- Spacing ---------- */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1.25rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-xll: 3.75rem;
+  --space-2xl: 4.5rem;
+
+  /* ---------- Shape & motion ---------- */
+  --radius-sm: 0.5rem;
+  --radius-md: 1.125rem;
+  --radius-pill: 999px;
+
+  --transition-snap: 200ms ease;
+  --transition-smooth: 350ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------- Responsive gutter minimums ----------
+   Desktop 60px → tablet 40px → mobile 30px. The grid
+   templates consume the token, so these overrides are
+   the single source of truth for gutter behavior. */
+
+@media (max-width: 1024px) {
+  :root {
+    --grid-gutter-min: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --grid-gutter-min: 30px;
+  }
+}

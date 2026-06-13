@@ -1,0 +1,113 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.face {
+  width: clamp(140px, 14vw, 200px);
+  color: var(--color-text);
+  border-radius: 50%;
+  transition: transform var(--transition-snap);
+}
+
+.face:hover {
+  transform: scale(1.04);
+}
+
+.face:active {
+  transform: scale(0.97);
+}
+
+.face:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 6px;
+}
+
+/* ---------- Comic speech bubble ---------- */
+
+.bubble {
+  position: absolute;
+  bottom: calc(100% + var(--space-sm));
+  left: 50%;
+  z-index: 2;
+  width: max-content;
+  max-width: 230px;
+  padding: var(--space-xs) var(--space-md);
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-text);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.4;
+  text-align: center;
+  transform: translateX(-50%);
+  animation: bubble-pop var(--transition-snap) backwards;
+}
+
+/* bubble tail */
+.bubble::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  background-color: var(--color-surface);
+  border-right: 2px solid var(--color-text);
+  border-bottom: 2px solid var(--color-text);
+  transform: translate(-50%, -58%) rotate(45deg);
+}
+
+@keyframes bubble-pop {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+/* ---------- Compact variant (mobile header) ----------
+   Small face, bubble sits to the right with a left-pointing tail */
+
+.compact {
+  display: inline-flex;
+  flex-direction: row;
+}
+
+.compact .face {
+  width: 52px;
+}
+
+.compact .bubble {
+  bottom: auto;
+  top: 50%;
+  left: calc(100% + var(--space-sm));
+  max-width: 210px;
+  transform: translateY(-50%);
+  animation-name: bubble-pop-side;
+}
+
+.compact .bubble::after {
+  top: 50%;
+  left: 0;
+  border: none;
+  border-left: 2px solid var(--color-text);
+  border-bottom: 2px solid var(--color-text);
+  transform: translate(-58%, -50%) rotate(45deg);
+}
+
+@keyframes bubble-pop-side {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+}

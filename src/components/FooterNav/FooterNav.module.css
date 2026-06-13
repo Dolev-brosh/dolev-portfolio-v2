@@ -1,0 +1,131 @@
+/* ============================================================
+   FooterNav — grid-native footer row.
+   Sits at the bottom of the content column on project pages.
+   Gap between cells creates 2px mint vertical lines.
+   border-top creates the 2px horizontal separator from the
+   last content section above (which must carry noBorder).
+   ============================================================ */
+
+.footer {
+  display: grid;
+  gap: var(--grid-line-width);
+  background-color: var(--color-grid-line);
+  border-top: var(--grid-line-width) solid var(--color-grid-line);
+  /* 4 : 3 : 1 matches the design — large negative-space cell,
+     wide navigation cell, narrow back-to-top cell.
+     minmax on the last column prevents it squeezing below 100px. */
+  grid-template-columns: 4fr 3fr auto;
+}
+
+.footer > * {
+  background-color: var(--color-bg);
+  min-height: 88px;
+}
+
+/* ---- Empty structural cell ---- */
+/* Keeps the grid lines continuous and provides visual breathing room. */
+.emptyCell {
+  /* intentionally empty */
+}
+
+/* ---- Next project / destination cell ---- */
+
+.nextCell {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-2xs);
+  padding: var(--space-lg) var(--space-xl);
+  text-decoration: none;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background-color var(--transition-snap);
+}
+
+.nextCell:hover {
+  background-color: var(--color-accent-soft);
+}
+
+.nextCell:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+}
+
+.cellLabel {
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.cellTitle {
+  font-size: var(--font-size-body);
+  font-weight: 600;
+  color: var(--color-text);
+   white-space: nowrap;
+}
+
+/* ---- Back to top cell ---- */
+
+.backToTopCell {
+  /* Full reset — this must look like a grid cell, not a button */
+  appearance: none;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs);
+  padding: var(--space-lg) var(--space-md);
+  /* Appearance */
+  background-color: var(--color-bg);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: background-color var(--transition-snap), color var(--transition-snap);
+}
+
+.backToTopCell:hover {
+  background-color: var(--color-accent-soft);
+  color: var(--color-text);
+}
+
+.backToTopCell:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+}
+
+.topArrow {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.topLabel {
+  font-size: var(--font-size-small);
+  font-weight: 300;
+   white-space: nowrap;
+}
+
+/* ---- Mobile (≤ 768px) ---- */
+/* Stack the two functional cells; hide the empty structural cell. */
+
+@media (max-width: 768px) {
+  .footer {
+    grid-template-columns: 1fr;
+  }
+
+  .emptyCell {
+    display: none;
+  }
+
+  .nextCell {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .backToTopCell {
+    min-height: 72px;
+  }
+}
